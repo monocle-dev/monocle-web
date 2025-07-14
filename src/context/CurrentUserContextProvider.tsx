@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import CurrentUserContext from './current-user-context';
-import type { User } from '../interfaces/Auth';
+import type { User } from '../interfaces/User';
 
 const CurrentUserContextProvider = ({ children }: { children: ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
