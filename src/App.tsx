@@ -16,8 +16,6 @@ const App = () => {
         if (response.ok) {
           const userData = await response.json();
           currentUserContext?.setCurrentUser(userData);
-          console.log(userData);
-          console.log(currentUserContext?.currentUser);
         } else {
           currentUserContext?.setCurrentUser(null);
         }

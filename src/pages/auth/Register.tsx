@@ -48,7 +48,8 @@ const Register = () => {
 
       setFormData({ name: '', email: '', password: '' });
       setConfirmPassword('');
-      navigate('/login');
+
+      navigate('/dashboard');
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setError(err.response?.data.error || 'Registration failed');
