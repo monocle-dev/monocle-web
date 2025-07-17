@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Logo from '../../components/Logo';
 import CurrentUserContext from '../../context/current-user-context';
+import { authAdapter } from '../../adapters/auth-adapters';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -36,24 +36,18 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('/api/auth/register', {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
+      const data = await authAdapter.register(formData);
 
-      if (response.data.user && setCurrentUser) {
-        setCurrentUser(response.data.user);
+      if (data.user && setCurrentUser) {
+        setCurrentUser(data.user);
       }
 
       setFormData({ name: '', email: '', password: '' });
       setConfirmPassword('');
 
-      navigate('/dashboard');
+      navigate('/projects');
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data.error || 'Registration failed');
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         setError(err.message);
       } else {
         setError('An unexpected error occurred');

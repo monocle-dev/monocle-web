@@ -7,7 +7,7 @@ const GuestRoutes = () => {
 
   const currentUser = context?.currentUser;
 
-  return !currentUser ? <Outlet /> : <Navigate to="/dashboard" />;
+  return !currentUser ? <Outlet /> : <Navigate to="/projects" />;
 };
 
 export default GuestRoutes;
