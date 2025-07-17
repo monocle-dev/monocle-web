@@ -4,10 +4,18 @@ import { useContext, useEffect, useState } from 'react';
 import CurrentUserContext from './context/current-user-context';
 import GuestRoutes from './components/GuestRoutes';
 import Register from './pages/auth/Register';
+import ProtectedRoutes from './components/ProtectedRoutes';
+import Projects from './pages/projects/Projects';
 
 const App = () => {
   const currentUserContext = useContext(CurrentUserContext);
   const [loading, setLoading] = useState(true);
+
+  if (!currentUserContext) {
+    throw new Error('CurrentUserContext is not provided');
+  }
+
+  const { setCurrentUser } = currentUserContext;
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -15,9 +23,9 @@ const App = () => {
         const response = await fetch('/api/auth/me');
         if (response.ok) {
           const userData = await response.json();
-          currentUserContext?.setCurrentUser(userData);
+          setCurrentUser(userData.user);
         } else {
-          currentUserContext?.setCurrentUser(null);
+          setCurrentUser(null);
         }
       } catch (error) {
         console.error('Failed to fetch current user:', error);
@@ -27,7 +35,7 @@ const App = () => {
     };
 
     fetchCurrentUser();
-  }, [currentUserContext]);
+  }, [setCurrentUser]);
 
   if (loading) {
     return null;
@@ -38,6 +46,10 @@ const App = () => {
       <Route element={<GuestRoutes />}>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+      </Route>
+
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/projects" element={<Projects />} />
       </Route>
     </Routes>
   );

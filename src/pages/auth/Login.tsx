@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Logo from '../../components/Logo';
 import CurrentUserContext from '../../context/current-user-context';
+import { authAdapter } from '../../adapters/auth-adapters';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,6 @@ const Login = () => {
   const navigate = useNavigate();
   const context = useContext(CurrentUserContext);
   const setCurrentUser = context?.setCurrentUser;
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
@@ -28,22 +27,21 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('/api/auth/login', formData);
+      const data = await authAdapter.login(formData);
 
-      if (response.data.user && setCurrentUser) {
-        setCurrentUser(response.data.user);
+      if (data.user && setCurrentUser) {
+        setCurrentUser(data.user);
       }
 
-      setFormData({ email: '', password: '' });
-      navigate('/dashboard');
+      navigate('/projects');
     } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data.error || 'Login failed');
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         setError(err.message);
       } else {
         setError('An unexpected error occurred');
       }
+
+      setFormData({ email: formData.email, password: '' });
     } finally {
       setIsLoading(false);
     }
