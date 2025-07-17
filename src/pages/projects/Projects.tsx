@@ -141,19 +141,44 @@ const Projects = () => {
         )}
 
         {(showCreateForm || editingProject) && (
-          <div className="mb-8 bg-gray-900 p-6 rounded-lg border border-gray-700">
-            <h2 className="text-xl font-semibold text-white mb-4">
-              {editingProject ? 'Edit Project' : 'Create New Project'}
-            </h2>
+          <div className="mb-6 bg-gray-900 p-5 rounded-lg border border-gray-700 shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-white">
+                {editingProject ? 'Edit Project' : 'Create New Project'}
+              </h2>
+              <button
+                type="button"
+                onClick={
+                  editingProject ? cancelEdit : () => setShowCreateForm(false)
+                }
+                className="text-gray-400 hover:text-gray-300 transition-colors"
+                title="Close form"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
             <form
               onSubmit={
                 editingProject ? handleUpdateProject : handleCreateProject
               }
+              className="space-y-4"
             >
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Project Name
+                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                    Project Name *
                   </label>
                   <input
                     type="text"
@@ -161,40 +186,48 @@ const Projects = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full bg-gray-700 text-white rounded-md p-3 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
                     placeholder="Enter project name"
+                    maxLength={100}
                     required
                   />
+                  <p className="text-xs text-gray-400 mt-1">
+                    {formData.name.length}/100
+                  </p>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Description
+                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                    Description *
                   </label>
-                  <input
-                    type="text"
+                  <textarea
                     value={formData.description}
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="w-full bg-gray-700 text-white rounded-md p-3 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter project description"
+                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none text-sm"
+                    placeholder="Brief description..."
+                    rows={3}
+                    maxLength={500}
                     required
                   />
+                  <p className="text-xs text-gray-400 mt-1">
+                    {formData.description.length}/500
+                  </p>
                 </div>
               </div>
-              <div className="flex gap-3 mt-6">
+              <div className="flex gap-3 pt-3">
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 >
-                  {editingProject ? 'Update Project' : 'Create Project'}
+                  {editingProject ? 'Update' : 'Create'}
                 </button>
                 <button
                   type="button"
                   onClick={
                     editingProject ? cancelEdit : () => setShowCreateForm(false)
                   }
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
                 >
                   Cancel
                 </button>
@@ -226,44 +259,55 @@ const Projects = () => {
             {projects.map((project: Project) => (
               <div
                 key={project.id}
-                className="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-gray-600 transition-colors"
+                className="bg-gray-900 border border-gray-700 rounded-lg p-6 hover:border-gray-600 hover:shadow-lg transition-all duration-200 flex flex-col h-full"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                <div className="flex justify-between items-start mb-4 flex-shrink-0">
+                  <div className="flex-1 min-w-0 pr-3">
+                    <h3
+                      className="text-lg font-semibold text-white mb-2 truncate"
+                      title={project.name}
+                    >
                       {project.name}
                     </h3>
-                    <p className="text-gray-300 text-sm line-clamp-2">
+                    <p
+                      className="text-gray-300 text-sm overflow-hidden text-ellipsis leading-relaxed"
+                      title={project.description}
+                    >
                       {project.description}
                     </p>
                   </div>
-                  <div className="flex gap-2 ml-4">
+                  <div className="flex gap-2 flex-shrink-0">
                     <button
                       onClick={() => startEdit(project)}
-                      className="text-gray-400 hover:text-blue-400 transition-colors"
+                      className="text-gray-400 hover:text-blue-400 transition-colors p-1 rounded hover:bg-gray-800"
                       title="Edit project"
+                      aria-label="Edit project"
                     >
                       <FaEdit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => handleDeleteProject(project.id)}
-                      className="text-gray-400 hover:text-red-400 transition-colors"
+                      className="text-gray-400 hover:text-red-400 transition-colors p-1 rounded hover:bg-gray-800"
                       title="Delete project"
+                      aria-label="Delete project"
                     >
                       <FaTrash className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-700">
                   <Link
                     to={`/projects/${project.id}`}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                   >
                     View Dashboard
                   </Link>
-                  <span className="text-xs text-gray-400">
-                    Project #{String(project.id).slice(0, 8)}
+                  <span
+                    className="text-xs text-gray-400 truncate ml-3"
+                    title={`Project ID: ${project.id}`}
+                  >
+                    #{String(project.id).slice(0, 8)}
                   </span>
                 </div>
               </div>
