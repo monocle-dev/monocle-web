@@ -6,6 +6,7 @@ import GuestRoutes from './components/GuestRoutes';
 import Register from './pages/auth/Register';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Projects from './pages/projects/Projects';
+import Landing from './pages/landing/Landing';
 
 const App = () => {
   const currentUserContext = useContext(CurrentUserContext);
@@ -44,6 +45,7 @@ const App = () => {
   return (
     <Routes>
       <Route element={<GuestRoutes />}>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Route>
