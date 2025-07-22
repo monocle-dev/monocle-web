@@ -10,7 +10,6 @@ const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 export const monitorsAdapter = {
-  // Get complete dashboard data
   async getDashboard(projectId: string): Promise<DashboardResponse> {
     try {
       const response = await axios.get(
@@ -26,7 +25,6 @@ export const monitorsAdapter = {
     }
   },
 
-  // Get monitors list only
   async getMonitors(projectId: string): Promise<MonitorSummary[]> {
     try {
       const response = await axios.get(
@@ -42,7 +40,6 @@ export const monitorsAdapter = {
     }
   },
 
-  // Get monitor check history
   async getMonitorChecks(
     projectId: string,
     monitorId: string
@@ -61,7 +58,6 @@ export const monitorsAdapter = {
     }
   },
 
-  // Create new monitor
   async createMonitor(
     projectId: string,
     monitorData: CreateMonitorRequest
@@ -84,7 +80,6 @@ export const monitorsAdapter = {
     }
   },
 
-  // Update existing monitor
   async updateMonitor(
     projectId: string,
     monitorId: string,
@@ -108,7 +103,6 @@ export const monitorsAdapter = {
     }
   },
 
-  // Delete monitor
   async deleteMonitor(projectId: string, monitorId: string): Promise<void> {
     try {
       await axios.delete(

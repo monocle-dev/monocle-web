@@ -32,7 +32,7 @@ export function useDashboard(projectId: string) {
     fetchDashboard();
   }, [fetchDashboard]);
 
-  // Auto-refresh every 30 seconds
+  // Auto-refresh every 60 seconds
   useEffect(() => {
     if (!projectId) return;
 

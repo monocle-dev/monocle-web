@@ -1,26 +1,3 @@
-// export interface HttpConfig {
-//   method: string;
-//   url: string;
-//   headers: Record<string, string>;
-//   expected_status: number;
-//   timeout: number;
-// }
-
-// export interface DNSConfig {
-//   domain: string;
-//   record_type: string; // A, AAAA, CNAME, MX, TXT, etc.
-//   expected: string; // Expected IP/value (optional)
-//   timeout: number; // Timeout in seconds
-// }
-
-// export interface SSLConfig {
-//   url: string;
-//   days_before_expiry: number; // Alert if cert expires within X days
-//   verify_chain: boolean; // Verify certificate chain
-//   check_san: boolean; // Check Subject Alternative Names
-//   timeout: number; // Timeout in seconds
-// }
-
 export interface MonitorConfig {
   url?: string;
   method?: string;
@@ -35,9 +12,8 @@ export interface MonitorConfig {
   check_san?: boolean;
 }
 
-// Placeholder interfaces for future implementation
+// TODO: Implement when backend portion is ready
 export interface DatabaseConfig {
-  // TODO: Implement when backend is ready
   connection_string?: string;
   db_type?: string;
   test_query?: string;

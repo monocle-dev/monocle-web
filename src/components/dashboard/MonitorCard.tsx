@@ -5,24 +5,17 @@ import {
   getMonitorStatusClass,
 } from '../../utils/monitorUtils';
 import type { MonitorSummary } from '../../interfaces/Monitor';
-import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 interface MonitorCardProps {
   monitor: MonitorSummary;
   onEdit?: (monitor: MonitorSummary) => void;
   onDelete?: (monitorId: number) => void;
-  onViewDetails?: (monitorId: number) => void;
 }
 
-export function MonitorCard({
-  monitor,
-  onEdit,
-  onDelete,
-  onViewDetails,
-}: MonitorCardProps) {
+export function MonitorCard({ monitor, onEdit, onDelete }: MonitorCardProps) {
   const handleDelete = async () => {
     if (!onDelete) return;
-    // Just call the callback - the parent will handle the confirmation modal
     onDelete(monitor.id);
   };
 
@@ -41,15 +34,6 @@ export function MonitorCard({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {onViewDetails && (
-            <button
-              onClick={() => onViewDetails(monitor.id)}
-              className="p-2 text-gray-400 hover:text-blue-400 transition-colors"
-              title="View Details"
-            >
-              <FaEye />
-            </button>
-          )}
           {onEdit && (
             <button
               onClick={() => onEdit(monitor)}

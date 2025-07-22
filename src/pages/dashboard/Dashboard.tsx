@@ -22,20 +22,16 @@ export function Dashboard() {
     null
   );
 
-  // Call hooks at the top level, before any conditional returns
   const { data, error, refetch } = useDashboard(projectId || '');
 
-  // Handle project ID validation first
   if (!projectId) {
     return <ErrorState error="Project ID is required" />;
   }
 
-  // Handle loading and error states
   if (error) return <ErrorState error={error} onRetry={refetch} />;
   if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
 
   const handleDeleteMonitor = async (monitorId: number) => {
-    // Find the monitor by ID
     const monitor = data?.monitors.find((m) => m.id === monitorId);
     if (monitor) {
       setDeletingMonitor(monitor);
@@ -46,11 +42,6 @@ export function Dashboard() {
   const handleEditMonitor = (monitor: MonitorSummary) => {
     setEditingMonitor(monitor);
     setShowCreateModal(true);
-  };
-
-  const handleViewDetails = (monitorId: number) => {
-    // You can implement a modal or navigate to a details page
-    console.log('View details for monitor:', monitorId);
   };
 
   const handleCreateSuccess = () => {
@@ -74,7 +65,6 @@ export function Dashboard() {
         />
 
         <div className="space-y-8">
-          {/* Monitors Section */}
           <section>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-semibold text-white">Monitors</h2>
@@ -90,11 +80,9 @@ export function Dashboard() {
               monitors={data.monitors}
               onEdit={handleEditMonitor}
               onDelete={handleDeleteMonitor}
-              onViewDetails={handleViewDetails}
             />
           </section>
 
-          {/* Recent Incidents Section */}
           <section>
             <RecentIncidents incidents={data.recent_incidents} />
           </section>

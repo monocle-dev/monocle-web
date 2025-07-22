@@ -66,15 +66,13 @@ export function CreateMonitorModal({
   };
 
   const [formData, setFormData] = useState<CreateMonitorRequest>({
-    name: editingMonitor?.name || '',
-    type: editingMonitor?.type || 'http',
-    interval: editingMonitor?.interval || 300,
-    config:
-      editingMonitor?.config ||
-      getDefaultConfig(editingMonitor?.type || 'http'),
+    name: '',
+    type: 'http',
+    interval: 300,
+    config: getDefaultConfig('http'),
   });
 
-  // Update form data when editingMonitor changes
+  // Update form data when editing monitor changes
   useEffect(() => {
     if (editingMonitor) {
       setFormData({
@@ -84,7 +82,6 @@ export function CreateMonitorModal({
         config: editingMonitor.config,
       });
     } else {
-      // Reset to default when creating new monitor
       setFormData({
         name: '',
         type: 'http',

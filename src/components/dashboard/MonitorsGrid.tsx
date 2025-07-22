@@ -5,14 +5,12 @@ interface MonitorsGridProps {
   monitors?: MonitorSummary[];
   onEdit?: (monitor: MonitorSummary) => void;
   onDelete?: (monitorId: number) => void;
-  onViewDetails?: (monitorId: number) => void;
 }
 
 export function MonitorsGrid({
   monitors = [],
   onEdit,
   onDelete,
-  onViewDetails,
 }: MonitorsGridProps) {
   if (!Array.isArray(monitors) || monitors.length === 0) {
     return (
@@ -34,7 +32,6 @@ export function MonitorsGrid({
           monitor={monitor}
           onEdit={onEdit}
           onDelete={onDelete}
-          onViewDetails={onViewDetails}
         />
       ))}
     </div>
