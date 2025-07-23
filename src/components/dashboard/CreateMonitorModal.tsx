@@ -70,24 +70,26 @@ export function CreateMonitorModal({
     config: getDefaultConfig('http'),
   });
 
-  // Update form data when editing monitor changes
+  // Update form data when editing monitor changes or modal opens/closes
   useEffect(() => {
-    if (editingMonitor) {
-      setFormData({
-        name: editingMonitor.name,
-        type: editingMonitor.type,
-        interval: editingMonitor.interval,
-        config: editingMonitor.config,
-      });
-    } else {
-      setFormData({
-        name: '',
-        type: 'http',
-        interval: 300,
-        config: getDefaultConfig('http'),
-      });
+    if (isOpen) {
+      if (editingMonitor) {
+        setFormData({
+          name: editingMonitor.name,
+          type: editingMonitor.type,
+          interval: editingMonitor.interval,
+          config: editingMonitor.config,
+        });
+      } else {
+        setFormData({
+          name: '',
+          type: 'http',
+          interval: 300,
+          config: getDefaultConfig('http'),
+        });
+      }
     }
-  }, [editingMonitor]);
+  }, [editingMonitor, isOpen]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

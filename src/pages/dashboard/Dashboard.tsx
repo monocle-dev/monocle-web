@@ -11,7 +11,7 @@ import { RefreshIndicator } from '../../components/ui/RefreshIndicator';
 import type { MonitorSummary } from '../../interfaces/Monitor';
 import { FaPlus } from 'react-icons/fa';
 
-export function Dashboard() {
+export const Dashboard = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -22,12 +22,13 @@ export function Dashboard() {
     null
   );
 
-  const { data, error, refetch } = useDashboard(projectId || '');
+  const { data, error, refetch, loading } = useDashboard(projectId || '');
 
   if (!projectId) {
     return <ErrorState error="Project ID is required" />;
   }
 
+  if (loading) return null;
   if (error) return <ErrorState error={error} onRetry={refetch} />;
   if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
 
@@ -57,7 +58,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="page-container">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <DashboardHeader
           project={data.project}
@@ -114,4 +115,4 @@ export function Dashboard() {
       </div>
     </div>
   );
-}
+};

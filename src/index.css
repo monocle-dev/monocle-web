@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 body {
-  @apply bg-gray-800 text-white min-h-screen;
+  @apply bg-gray-900 text-white min-h-screen;
 }
 
 #root {
