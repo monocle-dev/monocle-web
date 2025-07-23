@@ -51,7 +51,6 @@ export function formatDateTime(dateString: string): string {
 const baseClass = 'px-2 py-1 rounded-full text-xs font-medium';
 
 export function getStatusBadgeClass(status?: string): string {
-  const baseClass = 'px-2 py-1 rounded-full text-xs font-medium';
   switch (status) {
     case 'success':
       return `${baseClass} bg-green-100 text-green-800`;

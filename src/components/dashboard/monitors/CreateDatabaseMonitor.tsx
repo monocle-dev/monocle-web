@@ -52,7 +52,7 @@ const CreateDatabaseMonitor = ({
               onConfigChange('ssl_mode', 'prefer');
             } else {
               // Remove ssl_mode for mysql to keep the config clean
-              onConfigChange('ssl_mode', undefined);
+              onConfigChange('ssl_mode', null);
             }
           }}
           className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
