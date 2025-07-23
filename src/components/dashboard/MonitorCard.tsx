@@ -82,8 +82,8 @@ export function MonitorCard({ monitor, onEdit, onDelete }: MonitorCardProps) {
           <div className="flex justify-between">
             <span className="text-sm text-gray-400">Interval</span>
             <span className="text-sm font-medium text-gray-200">
-              {monitor.interval || 'N/A'}
-              {monitor.interval ? 's' : ''}
+              {monitor.interval ?? 'N/A'}
+              {monitor.interval != null ? 's' : ''}
             </span>
           </div>
         </div>
