@@ -7,6 +7,7 @@ import type {
 import { FaTimes } from 'react-icons/fa';
 import CreateHTTPMonitor from './monitors/CreateHTTPMonitor';
 import CreateDNSMonitor from './monitors/CreateDNSMonitor';
+import CreateDatabaseMonitor from './monitors/CreateDatabaseMonitor';
 
 export interface CreateMonitorModalProps {
   projectId: string;
@@ -170,11 +171,7 @@ export function CreateMonitorModal({
             <select
               value={formData.type}
               onChange={(e) => {
-                const newType = e.target.value as
-                  | 'http'
-                  | 'dns'
-                  | 'ssl'
-                  | 'database';
+                const newType = e.target.value as 'http' | 'dns' | 'database';
                 setFormData((prev) => ({
                   ...prev,
                   type: newType,
@@ -188,6 +185,7 @@ export function CreateMonitorModal({
             >
               <option value="http">HTTP/HTTPS</option>
               <option value="dns">DNS</option>
+              <option value="database">Database</option>
             </select>
           </div>
 
@@ -219,6 +217,13 @@ export function CreateMonitorModal({
 
           {formData.type === 'dns' && (
             <CreateDNSMonitor
+              formData={formData}
+              onConfigChange={handleConfigChange}
+            />
+          )}
+
+          {formData.type === 'database' && (
+            <CreateDatabaseMonitor
               formData={formData}
               onConfigChange={handleConfigChange}
             />

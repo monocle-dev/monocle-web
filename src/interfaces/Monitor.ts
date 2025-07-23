@@ -1,28 +1,32 @@
 export interface MonitorConfig {
+  // HTTP Monitor fields
   url?: string;
   method?: string;
   expected_status?: number;
   timeout?: number;
   headers?: Record<string, string>;
+
+  // DNS Monitor fields
   domain?: string;
   record_type?: string;
   expected?: string;
   days_before_expiry?: number;
   verify_chain?: boolean;
   check_san?: boolean;
-}
 
-// TODO: Implement when backend portion is ready
-export interface DatabaseConfig {
-  connection_string?: string;
-  db_type?: string;
-  test_query?: string;
-  timeout?: number;
+  // Database Monitor fields
+  type?: string; // "mysql", "postgres"
+  host?: string;
+  port?: number;
+  database?: string;
+  username?: string;
+  password?: string;
+  ssl_mode?: string; // For postgres
 }
 
 export interface CreateMonitorRequest {
   name: string;
-  type: 'http' | 'dns' | 'ssl' | 'database';
+  type: 'http' | 'dns' | 'database';
   interval: number; // Interval in seconds
   config: MonitorConfig;
 }
@@ -46,7 +50,7 @@ export interface DashboardResponse {
 export interface MonitorSummary {
   id: number;
   name: string;
-  type: 'http' | 'dns' | 'ssl' | 'database';
+  type: 'http' | 'dns' | 'database';
   status: 'active' | 'paused' | 'inactive';
   interval: number; // seconds
   config: MonitorConfig;
