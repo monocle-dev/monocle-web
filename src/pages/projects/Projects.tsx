@@ -107,20 +107,11 @@ const Projects = () => {
     setFormData({ name: '', description: '' });
   };
 
-  if (loading) {
-    return (
-      <div className="page-container flex items-center justify-center min-h-screen">
-        <div className="text-center" role="status">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-300">Loading projects...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return null;
 
   return (
     <div className="page-container min-h-screen">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">Projects</h1>
