@@ -7,6 +7,7 @@ import Register from './pages/auth/Register';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import Projects from './pages/projects/Projects';
 import Landing from './pages/landing/Landing';
+import { Dashboard } from './pages/dashboard/Dashboard';
 
 const App = () => {
   const currentUserContext = useContext(CurrentUserContext);
@@ -52,6 +53,7 @@ const App = () => {
 
       <Route element={<ProtectedRoutes />}>
         <Route path="/projects" element={<Projects />} />
+        <Route path="/projects/:projectId/dashboard" element={<Dashboard />} />
       </Route>
     </Routes>
   );
