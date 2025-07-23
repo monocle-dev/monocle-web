@@ -48,7 +48,8 @@ export function formatDateTime(dateString: string): string {
   return format(new Date(dateString), 'MMM dd, yyyy HH:mm:ss');
 }
 
-// Status badge utilities
+const baseClass = 'px-2 py-1 rounded-full text-xs font-medium';
+
 export function getStatusBadgeClass(status?: string): string {
   const baseClass = 'px-2 py-1 rounded-full text-xs font-medium';
   switch (status) {
@@ -66,7 +67,6 @@ export function getStatusBadgeClass(status?: string): string {
 export function getMonitorStatusClass(
   status: 'active' | 'paused' | 'inactive'
 ): string {
-  const baseClass = 'px-2 py-1 rounded-full text-xs font-medium';
   switch (status) {
     case 'active':
       return `${baseClass} bg-green-900/30 text-green-300 border border-green-700`;
