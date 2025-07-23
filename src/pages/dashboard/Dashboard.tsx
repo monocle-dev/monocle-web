@@ -22,13 +22,12 @@ export const Dashboard = () => {
     null
   );
 
-  const { data, error, refetch, loading } = useDashboard(projectId || '');
+  const { data, error, refetch } = useDashboard(projectId || '');
 
   if (!projectId) {
     return <ErrorState error="Project ID is required" />;
   }
 
-  if (loading) return null;
   if (error) return <ErrorState error={error} onRetry={refetch} />;
   if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
 

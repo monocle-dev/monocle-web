@@ -15,9 +15,7 @@ export function useDashboard(projectId: string) {
     }
 
     try {
-      if (data) {
-        setLoading(true);
-      }
+      setLoading(true);
       const dashboardData = await monitorsAdapter.getDashboard(projectId);
       setData(dashboardData);
       setError(null);
@@ -26,9 +24,7 @@ export function useDashboard(projectId: string) {
         err instanceof Error ? err.message : 'Failed to fetch dashboard'
       );
     } finally {
-      if (loading) {
-        setLoading(false);
-      }
+      setLoading(false);
     }
   }, [projectId]);
 
