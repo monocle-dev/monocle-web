@@ -27,7 +27,7 @@ export function CreateMonitorModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const getDefaultConfig = (type: 'http' | 'dns' | 'ssl' | 'database') => {
+  const getDefaultConfig = (type: 'http' | 'dns' | 'database') => {
     switch (type) {
       case 'http':
         return {
@@ -43,14 +43,6 @@ export function CreateMonitorModal({
           record_type: 'A',
           expected: '',
           timeout: 10,
-        };
-      case 'ssl':
-        return {
-          url: '',
-          days_before_expiry: 30,
-          verify_chain: true,
-          check_san: false,
-          timeout: 30,
         };
       case 'database':
         return {
