@@ -12,13 +12,24 @@ const CreateDatabaseMonitor = ({
 }: CreateDatabaseMonitorProps) => {
   const config = formData.config as Record<string, unknown>;
 
-  // Set default port when database type changes or component mounts
+  // Set default values when component mounts or when needed
   useEffect(() => {
+    // Set default database type if not set
+    if (!config.type) {
+      onConfigChange('type', 'postgres');
+    }
+
+    // Set default port if not set
     if (!config.port) {
-      const defaultPort = config.type === 'postgres' ? 5432 : 3306;
+      const defaultPort = (config.type || 'postgres') === 'mysql' ? 3306 : 5432;
       onConfigChange('port', defaultPort);
     }
-  }, [config.type, config.port, onConfigChange]);
+
+    // Set default SSL mode for postgres if not set
+    if ((config.type || 'postgres') === 'postgres' && !config.ssl_mode) {
+      onConfigChange('ssl_mode', 'prefer');
+    }
+  }, [config.type, config.port, config.ssl_mode, onConfigChange]);
 
   return (
     <>
@@ -27,19 +38,28 @@ const CreateDatabaseMonitor = ({
           Database Type
         </label>
         <select
-          value={String(config.type || 'mysql')}
+          value={String(config.type || 'postgres')}
           onChange={(e) => {
             const newType = e.target.value;
             onConfigChange('type', newType);
+
             // Auto-update port when type changes
-            const defaultPort = newType === 'postgres' ? 5432 : 3306;
+            const defaultPort = newType === 'mysql' ? 3306 : 5432;
             onConfigChange('port', defaultPort);
+
+            // Set default SSL mode for postgres, remove for mysql
+            if (newType === 'postgres') {
+              onConfigChange('ssl_mode', 'prefer');
+            } else {
+              // Remove ssl_mode for mysql to keep the config clean
+              onConfigChange('ssl_mode', undefined);
+            }
           }}
           className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           required
         >
-          <option value="mysql">MySQL</option>
           <option value="postgres">PostgreSQL</option>
+          <option value="mysql">MySQL</option>
         </select>
       </div>
 
@@ -53,7 +73,7 @@ const CreateDatabaseMonitor = ({
             value={String(config.host || '')}
             onChange={(e) => onConfigChange('host', e.target.value)}
             className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="localhost or IP address"
+            placeholder="host"
             required
           />
         </div>
@@ -65,7 +85,8 @@ const CreateDatabaseMonitor = ({
           <input
             type="number"
             value={Number(
-              config.port || (config.type === 'postgres' ? 5432 : 3306)
+              config.port ||
+                ((config.type || 'postgres') === 'mysql' ? 3306 : 5432)
             )}
             onChange={(e) => {
               const portValue = parseInt(e.target.value);
@@ -74,16 +95,16 @@ const CreateDatabaseMonitor = ({
                 onConfigChange('port', portValue);
               } else if (e.target.value === '') {
                 // If field is cleared, set to default
-                onConfigChange(
-                  'port',
-                  config.type === 'postgres' ? 5432 : 3306
-                );
+                const currentType = config.type || 'postgres';
+                onConfigChange('port', currentType === 'mysql' ? 3306 : 5432);
               }
             }}
             min="1"
             max="65535"
             className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder={config.type === 'postgres' ? '5432' : '3306'}
+            placeholder={
+              (config.type || 'postgres') === 'mysql' ? '3306' : '5432'
+            }
             required
           />
         </div>
@@ -151,7 +172,7 @@ const CreateDatabaseMonitor = ({
           />
         </div>
 
-        {config.type === 'postgres' && (
+        {(config.type || 'postgres') === 'postgres' && (
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
               SSL Mode

@@ -54,10 +54,11 @@ export function CreateMonitorModal({
         };
       case 'database':
         return {
-          connection_string: '',
-          db_type: 'postgres',
-          test_query: '',
-          timeout: 10,
+          host: '',
+          port: 5432,
+          database: '',
+          username: '',
+          password: '',
         };
       default:
         return {};
