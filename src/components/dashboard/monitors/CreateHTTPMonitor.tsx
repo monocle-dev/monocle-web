@@ -9,7 +9,7 @@ const CreateHTTPMonitor = ({
   formData,
   onConfigChange,
 }: CreateHTTPMonitorProps) => {
-  const config = formData.config as Record<string, unknown>;
+  const { config } = formData;
 
   return (
     <>

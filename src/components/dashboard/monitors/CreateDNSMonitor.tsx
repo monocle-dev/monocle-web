@@ -9,7 +9,7 @@ const CreateDNSMonitor = ({
   formData,
   onConfigChange,
 }: CreateDNSMonitorProps) => {
-  const config = formData.config as Record<string, unknown>;
+  const { config } = formData;
 
   return (
     <>

@@ -79,6 +79,8 @@ export interface IncidentSummary {
   id: number;
   monitor_id: number;
   monitor_name: string;
+  title: string;
+  description: string;
   status: 'ongoing' | 'resolved';
   started_at: string;
   resolved_at?: string;

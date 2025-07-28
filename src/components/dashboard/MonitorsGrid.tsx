@@ -14,7 +14,7 @@ export function MonitorsGrid({
 }: MonitorsGridProps) {
   if (!Array.isArray(monitors) || monitors.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-800 rounded-lg border border-gray-700">
+      <div className="text-center py-12 bg-gray-800 rounded-lg border border-gray-700 m-3">
         <div className="text-6xl mb-4">📊</div>
         <h3 className="text-lg font-medium text-white mb-2">No monitors yet</h3>
         <p className="text-gray-400 mb-4">
@@ -25,7 +25,7 @@ export function MonitorsGrid({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3">
       {monitors.map((monitor) => (
         <MonitorCard
           key={monitor.id}

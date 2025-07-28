@@ -62,18 +62,3 @@ export function getStatusBadgeClass(status?: string): string {
       return `${baseClass} bg-gray-100 text-gray-800`;
   }
 }
-
-export function getMonitorStatusClass(
-  status: 'active' | 'paused' | 'inactive'
-): string {
-  switch (status) {
-    case 'active':
-      return `${baseClass} bg-green-900/30 text-green-300 border border-green-700`;
-    case 'paused':
-      return `${baseClass} bg-yellow-900/30 text-yellow-300 border border-yellow-700`;
-    case 'inactive':
-      return `${baseClass} bg-gray-800 text-gray-400 border border-gray-600`;
-    default:
-      return `${baseClass} bg-gray-800 text-gray-400 border border-gray-600`;
-  }
-}
