@@ -47,7 +47,9 @@ export const Dashboard = () => {
   const handleCreateSuccess = () => {
     setShowCreateModal(false);
     setEditingMonitor(null);
-    refetch();
+    setTimeout(() => {
+      refetch();
+    }, 500);
   };
 
   const handleDeleteSuccess = () => {
@@ -76,15 +78,24 @@ export const Dashboard = () => {
                 Add Monitor
               </button>
             </div>
-            <MonitorsGrid
-              monitors={data.monitors}
-              onEdit={handleEditMonitor}
-              onDelete={handleDeleteMonitor}
-            />
+            <div className="max-h-96 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
+              <MonitorsGrid
+                monitors={data.monitors}
+                onEdit={handleEditMonitor}
+                onDelete={handleDeleteMonitor}
+              />
+            </div>
           </section>
 
           <section>
-            <RecentIncidents incidents={data.recent_incidents} />
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold text-white">
+                Recent Incidents
+              </h2>
+            </div>
+            <div className="max-h-96 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
+              <RecentIncidents incidents={data.recent_incidents} />
+            </div>
           </section>
         </div>
 
