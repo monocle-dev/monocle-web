@@ -13,6 +13,8 @@ const Projects = () => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
+    discord_webhook: '',
+    slack_webhook: '',
   });
 
   useEffect(() => {
@@ -42,7 +44,12 @@ const Projects = () => {
     e.preventDefault();
     try {
       await projectsAdapter.createProject(formData);
-      setFormData({ name: '', description: '' });
+      setFormData({
+        name: '',
+        description: '',
+        discord_webhook: '',
+        slack_webhook: '',
+      });
       setShowCreateForm(false);
       fetchProjects();
     } catch (err: unknown) {
@@ -60,7 +67,12 @@ const Projects = () => {
 
     try {
       await projectsAdapter.updateProject(editingProject.id, formData);
-      setFormData({ name: '', description: '' });
+      setFormData({
+        name: '',
+        description: '',
+        discord_webhook: '',
+        slack_webhook: '',
+      });
       setEditingProject(null);
       fetchProjects();
     } catch (err: unknown) {
@@ -89,22 +101,35 @@ const Projects = () => {
 
   const startEdit = (project: Project) => {
     setEditingProject(project);
+    console.log(project);
     setFormData({
       name: project.name,
       description: project.description,
+      discord_webhook: project.discord_webhook,
+      slack_webhook: project.slack_webhook,
     });
     setShowCreateForm(false);
   };
 
   const cancelEdit = () => {
     setEditingProject(null);
-    setFormData({ name: '', description: '' });
+    setFormData({
+      name: '',
+      description: '',
+      discord_webhook: '',
+      slack_webhook: '',
+    });
   };
 
   const startCreate = () => {
     setShowCreateForm(true);
     setEditingProject(null);
-    setFormData({ name: '', description: '' });
+    setFormData({
+      name: '',
+      description: '',
+      discord_webhook: '',
+      slack_webhook: '',
+    });
   };
 
   if (loading) return null;
@@ -166,46 +191,78 @@ const Projects = () => {
               }
               className="space-y-4"
             >
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
-                    Project Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
-                    placeholder="Enter project name"
-                    maxLength={100}
-                    required
-                  />
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formData.name.length}/100
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
-                    Description *
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none text-sm"
-                    placeholder="Brief description..."
-                    rows={3}
-                    maxLength={500}
-                    required
-                  />
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formData.description.length}/500
-                  </p>
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Project Name *
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
+                  placeholder="Enter project name"
+                  maxLength={100}
+                  required
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  {formData.name.length}/100
+                </p>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Description *
+                </label>
+                <textarea
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none text-sm"
+                  placeholder="Brief description..."
+                  rows={3}
+                  maxLength={500}
+                  required
+                />
+                <p className="text-xs text-gray-400 mt-1">
+                  {formData.description.length}/500
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Discord Webhook
+                </label>
+                <input
+                  type="text"
+                  value={formData.discord_webhook}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      discord_webhook: e.target.value,
+                    })
+                  }
+                  className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
+                  placeholder="Enter Discord Webhook"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-1.5">
+                  Slack Webhook
+                </label>
+                <input
+                  type="text"
+                  value={formData.slack_webhook}
+                  onChange={(e) =>
+                    setFormData({ ...formData, slack_webhook: e.target.value })
+                  }
+                  className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
+                  placeholder="Enter Slack Webhook"
+                />
+              </div>
+
               <div className="flex gap-3 pt-3">
                 <button
                   type="submit"

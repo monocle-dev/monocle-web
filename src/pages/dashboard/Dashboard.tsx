@@ -22,12 +22,13 @@ export const Dashboard = () => {
     null
   );
 
-  const { data, error, refetch } = useDashboard(projectId || '');
+  const { data, error, refetch, loading } = useDashboard(projectId || '');
 
   if (!projectId) {
     return <ErrorState error="Project ID is required" />;
   }
 
+  if (!data && loading) return null;
   if (error) return <ErrorState error={error} onRetry={refetch} />;
   if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
 
@@ -47,9 +48,7 @@ export const Dashboard = () => {
   const handleCreateSuccess = () => {
     setShowCreateModal(false);
     setEditingMonitor(null);
-    setTimeout(() => {
-      refetch();
-    }, 500);
+    refetch();
   };
 
   const handleDeleteSuccess = () => {
@@ -78,7 +77,7 @@ export const Dashboard = () => {
                 Add Monitor
               </button>
             </div>
-            <div className="max-h-96 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
+            <div className="max-h-130 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
               <MonitorsGrid
                 monitors={data.monitors}
                 onEdit={handleEditMonitor}
@@ -93,7 +92,7 @@ export const Dashboard = () => {
                 Recent Incidents
               </h2>
             </div>
-            <div className="max-h-96 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
+            <div className="max-h-130 overflow-auto border border-gray-700 rounded-lg bg-gray-800/50 p-1">
               <RecentIncidents incidents={data.recent_incidents} />
             </div>
           </section>

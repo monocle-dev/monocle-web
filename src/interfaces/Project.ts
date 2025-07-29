@@ -3,4 +3,6 @@ export interface Project {
   name: string;
   description: string;
   ownerID: number;
+  discord_webhook: string;
+  slack_webhook: string;
 }

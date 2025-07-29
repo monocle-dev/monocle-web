@@ -4,6 +4,8 @@ import type { Project } from '../interfaces/Project';
 interface ProjectData {
   name: string;
   description: string;
+  discord_webhook?: string;
+  slack_webhook?: string;
 }
 
 interface ProjectAdapter {
