@@ -12,12 +12,10 @@ body {
   @apply px-4 py-4 sm:px-6 lg:px-8;
 }
 
-/* Consistent max-width for all containers */
 .app-container {
   @apply max-w-[1200px] mx-auto;
 }
 
-/* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -38,7 +36,6 @@ body {
   background: rgba(107, 114, 128, 0.8);
 }
 
-/* Text truncation utilities */
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
