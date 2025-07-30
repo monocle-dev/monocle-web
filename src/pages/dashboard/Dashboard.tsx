@@ -86,7 +86,7 @@ export const Dashboard = () => {
                   <span className="sm:hidden">Add</span>
                 </button>
               </div>
-              <div className="flex-1 overflow-hidden border border-gray-700/30 rounded-xl sm:rounded-2xl bg-gray-900/40 backdrop-blur-sm shadow-xl min-h-0">
+              <div className="flex-1 overflow-hidden border border-gray-700/30 rounded-xl sm:rounded-2xl bg-gray-900/40 shadow-xl min-h-0">
                 <div className="h-full overflow-y-auto p-3 sm:p-4">
                   <MonitorsGrid
                     monitors={data.monitors}
@@ -103,7 +103,7 @@ export const Dashboard = () => {
                   Recent Incidents
                 </h2>
               </div>
-              <div className="flex-1 overflow-hidden border border-gray-700/30 rounded-xl sm:rounded-2xl bg-gray-900/40 backdrop-blur-sm shadow-xl min-h-0">
+              <div className="flex-1 overflow-hidden border border-gray-700/30 rounded-xl sm:rounded-2xl bg-gray-900/40 shadow-xl min-h-0">
                 <div className="h-full overflow-y-auto p-3 sm:p-4">
                   <RecentIncidents incidents={data.recent_incidents} />
                 </div>

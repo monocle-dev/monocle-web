@@ -55,7 +55,7 @@ export function StatCard({
       className={`
       group relative overflow-hidden
       bg-gradient-to-br ${getColorClasses(color)}
-      backdrop-blur-xl bg-gray-900/50 
+      bg-gray-900/50 
       border border-gray-700/50 rounded-lg sm:rounded-xl lg:rounded-2xl 
       p-3 sm:p-4 lg:p-6 shadow-xl hover:shadow-2xl 
       transition-all duration-300 ease-out

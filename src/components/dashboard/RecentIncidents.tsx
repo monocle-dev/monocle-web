@@ -54,7 +54,7 @@ function IncidentCard({ incident, onClick }: IncidentCardProps) {
       className={`
         group relative overflow-hidden cursor-pointer
         bg-gradient-to-br ${statusColor}
-        backdrop-blur-xl bg-gray-900/50 
+      bg-gray-900/50 
         border border-gray-700/50 rounded-xl 
         p-3 sm:p-4 lg:p-5 shadow-lg hover:shadow-xl 
         transition-all duration-200 ease-out
@@ -171,7 +171,7 @@ export function RecentIncidents({ incidents = [] }: RecentIncidentsProps) {
   if (!Array.isArray(incidents) || incidents.length === 0) {
     return (
       <div className="h-full flex items-center justify-center">
-        <div className="relative overflow-hidden bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6 sm:p-8 shadow-xl max-w-md mx-auto">
+        <div className="relative overflow-hidden bg-gradient-to-br from-gray-900/50 to-gray-800/50 border border-gray-700/50 rounded-xl p-6 sm:p-8 shadow-xl max-w-md mx-auto">
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 via-green-600/5 to-teal-600/5" />
 
           <div className="relative text-center">

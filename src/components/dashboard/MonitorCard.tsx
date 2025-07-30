@@ -60,7 +60,7 @@ export function MonitorCard({ monitor, onEdit, onDelete }: MonitorCardProps) {
       className={`
       group relative overflow-hidden
       bg-gradient-to-br ${statusColor}
-      backdrop-blur-xl bg-gray-900/50 
+      bg-gray-900/50 
       border border-gray-700/50 rounded-xl 
       p-3 sm:p-4 lg:p-5 shadow-lg hover:shadow-xl 
       transition-all duration-200 ease-out
