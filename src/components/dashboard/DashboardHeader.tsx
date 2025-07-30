@@ -12,22 +12,27 @@ export function DashboardHeader({ project, summary }: DashboardHeaderProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="mb-8">
-      <div className="mb-4">
+    <div className="mb-3 sm:mb-4 lg:mb-6">
+      <div className="mb-2 sm:mb-3 lg:mb-4">
         <button
           onClick={() => navigate('/projects')}
-          className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-gray-700 hover:bg-gray-600 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg flex items-center gap-2 transition-colors text-sm sm:text-base"
         >
-          <FaArrowLeft className="w-4 h-4" />
-          Back to Projects
+          <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          <span className="hidden sm:inline">Back to Projects</span>
+          <span className="sm:hidden">Back</span>
         </button>
       </div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white">{project.name}</h1>
-        <p className="text-gray-400 mt-2">{project.description}</p>
+      <div className="mb-3 sm:mb-4 lg:mb-6">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
+          {project.name}
+        </h1>
+        <p className="text-gray-400 mt-1 sm:mt-2 text-sm sm:text-base">
+          {project.description}
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
         <StatCard
           label="Total Monitors"
           value={summary.total}

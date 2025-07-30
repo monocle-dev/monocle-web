@@ -3,15 +3,18 @@ import {
   formatResponseTime,
 } from '../../utils/monitorUtils';
 import type { IncidentSummary } from '../../interfaces/Monitor';
+import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
+import { useState } from 'react';
+import { IncidentDetailsModal } from './IncidentDetailsModal';
 
 interface IncidentCardProps {
   incident: IncidentSummary;
+  onClick: (incident: IncidentSummary) => void;
 }
 
-function IncidentCard({ incident }: IncidentCardProps) {
+function IncidentCard({ incident, onClick }: IncidentCardProps) {
   const isOngoing = !incident.resolved_at;
 
-  // Parse and format the description for better display
   const formatDescription = (description: string) => {
     const lines = description.split('\n').filter((line) => line.trim());
     const sections: { [key: string]: string[] } = { main: [] };
@@ -20,7 +23,6 @@ function IncidentCard({ incident }: IncidentCardProps) {
     lines.forEach((line) => {
       const trimmed = line.trim();
 
-      // Check if this line starts a new section
       if (
         trimmed.endsWith(':') &&
         !trimmed.includes('Error:') &&
@@ -29,14 +31,11 @@ function IncidentCard({ incident }: IncidentCardProps) {
         currentSection = trimmed.slice(0, -1);
         sections[currentSection] = [];
       } else if (trimmed.startsWith('Error:') || trimmed.startsWith('failed')) {
-        // Handle error lines specially
         if (!sections.error) sections.error = [];
         sections.error.push(trimmed);
       } else if (trimmed.includes(':') && currentSection !== 'main') {
-        // Configuration items
         sections[currentSection].push(trimmed);
       } else {
-        // Main description
         sections.main.push(trimmed);
       }
     });
@@ -45,123 +44,106 @@ function IncidentCard({ incident }: IncidentCardProps) {
   };
 
   const sections = formatDescription(incident.description);
+  const statusColor = isOngoing
+    ? 'from-red-500/20 to-rose-500/20 border-red-500/30'
+    : 'from-emerald-500/20 to-green-500/20 border-emerald-500/30';
 
   return (
     <div
-      className={`border rounded-lg p-3 flex flex-col min-h-[200px] ${
-        isOngoing
-          ? 'border-red-700 bg-red-900/20'
-          : 'border-green-700 bg-green-900/20'
-      }`}
+      onClick={() => onClick(incident)}
+      className={`
+        group relative overflow-hidden cursor-pointer
+        bg-gradient-to-br ${statusColor}
+        backdrop-blur-xl bg-gray-900/50 
+        border border-gray-700/50 rounded-xl 
+        p-3 sm:p-4 lg:p-5 shadow-lg hover:shadow-xl 
+        transition-all duration-200 ease-out
+        hover:scale-[1.02] hover:border-gray-600/50
+        flex flex-col h-[180px] sm:h-[200px] lg:h-[220px]
+      `}
     >
-      <div className="flex items-start justify-between mb-2">
-        <div className="flex-1 min-w-0">
-          <h4 className="font-medium text-white mb-2 text-sm truncate">
-            {incident.monitor_name}
-          </h4>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-teal-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Main description */}
-          {sections.main.length > 0 && (
-            <div className="mb-2">
-              {sections.main.map((line, index) => (
-                <p key={index} className="text-xs text-gray-300 mb-1">
-                  {line}
-                </p>
-              ))}
-            </div>
-          )}
-
-          {/* Error section */}
-          {sections.error && (
-            <div className="mb-2 p-2 bg-red-900/30 border border-red-700/50 rounded">
-              <p className="text-xs font-medium text-red-300 mb-1">
-                Error Details:
-              </p>
-              {sections.error.map((error, index) => (
-                <p
-                  key={index}
-                  className="text-xs text-red-200 font-mono break-all"
-                >
-                  {error.replace('Error: ', '')}
-                </p>
-              ))}
-            </div>
-          )}
-
-          {/* Configuration sections */}
-          {Object.entries(sections).map(([sectionName, items]) => {
-            if (
-              sectionName === 'main' ||
-              sectionName === 'error' ||
-              items.length === 0
-            )
-              return null;
-
-            return (
-              <div key={sectionName} className="mb-2">
-                <p className="text-xs font-medium text-gray-400 mb-1">
-                  {sectionName}:
-                </p>
-                <div className="pl-2 border-l-2 border-gray-600">
-                  {items.map((item, index) => {
-                    const [key, ...valueParts] = item.split(':');
-                    const value = valueParts.join(':').trim();
-
-                    return (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center py-0.5"
-                      >
-                        <span className="text-xs text-gray-400">
-                          {key.trim()}:
-                        </span>
-                        <span className="text-xs text-gray-300 font-mono">
-                          {value}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-
-          <div className="flex items-center gap-2 mt-auto">
-            <span
-              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                isOngoing
-                  ? 'bg-red-900/30 text-red-300 border border-red-700'
-                  : 'bg-green-900/30 text-green-300 border border-green-700'
-              }`}
-            >
-              {incident.status.toUpperCase()}
-            </span>
+      <div className="relative flex items-start justify-between mb-2 sm:mb-3">
+        <div className="flex items-start gap-2 flex-1 min-w-0">
+          <div
+            className={`flex-shrink-0 p-1.5 rounded-lg border ${
+              isOngoing
+                ? 'bg-red-500/10 border-red-500/30'
+                : 'bg-emerald-500/10 border-emerald-500/30'
+            }`}
+          >
+            {isOngoing ? (
+              <FaExclamationTriangle className="w-4 h-4 text-red-400" />
+            ) : (
+              <FaCheckCircle className="w-4 h-4 text-emerald-400" />
+            )}
           </div>
-        </div>
-        <div className="text-lg ml-2 flex-shrink-0">
-          {isOngoing ? '🔴' : '✅'}
+          <div className="flex-1 min-w-0">
+            <h4 className="font-semibold text-white mb-1 truncate text-sm">
+              {incident.monitor_name}
+            </h4>
+            <div className="flex items-center gap-2">
+              <span
+                className={`
+                inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium
+                ${
+                  isOngoing
+                    ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                    : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                }
+              `}
+              >
+                <div
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    isOngoing ? 'bg-red-400 animate-pulse' : 'bg-emerald-400'
+                  }`}
+                />
+                {incident.status.toUpperCase()}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="space-y-1 text-xs text-gray-400 mt-auto pt-2">
-        <div className="flex justify-between">
-          <span>Started:</span>
-          <span>{formatLastChecked(incident.started_at)}</span>
+      <div className="flex-1 mb-2 sm:mb-3">
+        {sections.main.length > 0 && (
+          <div className="text-xs text-gray-300 line-clamp-3">
+            {sections.main.join(' ')}
+          </div>
+        )}
+
+        <div className="mt-2 text-xs text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="hidden sm:inline">Click for details →</span>
+          <span className="sm:hidden">Tap for details →</span>
         </div>
+      </div>
 
-        {incident.resolved_at && (
-          <div className="flex justify-between">
-            <span>Resolved:</span>
-            <span>{formatLastChecked(incident.resolved_at)}</span>
+      <div className="relative border-t border-gray-700/30 pt-2 mt-auto">
+        <div className="grid grid-cols-2 gap-2 text-xs text-gray-400">
+          <div>
+            <div className="text-gray-500">Started</div>
+            <div className="text-gray-300">
+              {formatLastChecked(incident.started_at)}
+            </div>
           </div>
-        )}
 
-        {incident.duration && (
-          <div className="flex justify-between">
-            <span>Duration:</span>
-            <span>{formatResponseTime(incident.duration * 1000)}</span>
-          </div>
-        )}
+          {incident.resolved_at ? (
+            <div className="text-right">
+              <div className="text-gray-500">Duration</div>
+              <div className="text-gray-300">
+                {incident.duration
+                  ? formatResponseTime(incident.duration * 1000)
+                  : 'N/A'}
+              </div>
+            </div>
+          ) : (
+            <div className="text-right">
+              <div className="text-red-300">Ongoing</div>
+              <div className="text-red-400">Active issue</div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -172,25 +154,70 @@ interface RecentIncidentsProps {
 }
 
 export function RecentIncidents({ incidents = [] }: RecentIncidentsProps) {
+  const [selectedIncident, setSelectedIncident] =
+    useState<IncidentSummary | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleIncidentClick = (incident: IncidentSummary) => {
+    setSelectedIncident(incident);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedIncident(null);
+  };
+
   if (!Array.isArray(incidents) || incidents.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-800 rounded-lg border border-gray-700 m-3">
-        <div className="text-4xl mb-3">🎉</div>
-        <h3 className="text-lg font-medium text-white mb-2">
-          No recent incidents!
-        </h3>
-        <p className="text-xs text-gray-400">
-          Your services are running smoothly.
-        </p>
+      <div className="h-full flex items-center justify-center">
+        <div className="relative overflow-hidden bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-xl p-6 sm:p-8 shadow-xl max-w-md mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/5 via-green-600/5 to-teal-600/5" />
+
+          <div className="relative text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-xl border border-emerald-500/30 mb-4">
+              <FaCheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400" />
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+              All Systems Operational
+            </h3>
+            <p className="text-gray-400 mb-4 max-w-md mx-auto text-sm sm:text-base">
+              Great news! No incidents detected. Your services are running
+              smoothly.
+            </p>
+
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-1.5">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-emerald-300 text-xs sm:text-sm font-medium">
+                System Health: Excellent
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3">
-      {incidents.map((incident) => (
-        <IncidentCard key={incident.id} incident={incident} />
-      ))}
-    </div>
+    <>
+      <div className="h-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-4 auto-rows-max">
+          {incidents.map((incident) => (
+            <IncidentCard
+              key={incident.id}
+              incident={incident}
+              onClick={handleIncidentClick}
+            />
+          ))}
+        </div>
+      </div>
+
+      <IncidentDetailsModal
+        incident={selectedIncident}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 }

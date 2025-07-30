@@ -82,16 +82,13 @@ export function CreateProjectModal({
 
   return (
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
-      {/* Backdrop */}
       <div
         className="fixed inset-0 bg-black/50 backdrop-blur-sm"
         aria-hidden="true"
       />
 
-      {/* Full-screen container to center the panel */}
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="relative overflow-hidden bg-gradient-to-br from-gray-900/95 to-gray-800/95 backdrop-blur-xl border border-gray-700/50 rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh]">
-          {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-700/50">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-500/10 border border-blue-500/30 rounded-lg">
@@ -109,7 +106,6 @@ export function CreateProjectModal({
             </button>
           </div>
 
-          {/* Content */}
           <div className="overflow-y-auto max-h-[calc(90vh-140px)]">
             <div className="p-6">
               {error && (
