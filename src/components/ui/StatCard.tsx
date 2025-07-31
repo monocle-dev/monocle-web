@@ -3,13 +3,8 @@ import type { ReactNode } from 'react';
 interface StatCardProps {
   label: string;
   value: number | string;
-  icon?: ReactNode;
+  icon?: ReactNode | string;
   color?: 'green' | 'red' | 'yellow' | 'blue' | 'gray';
-  trend?: {
-    value: number;
-    isPositive: boolean;
-  };
-  subtitle?: string;
 }
 
 export function StatCard({
@@ -17,8 +12,6 @@ export function StatCard({
   value,
   icon,
   color = 'gray',
-  trend,
-  subtitle,
 }: StatCardProps) {
   const getColorClasses = (color: string) => {
     switch (color) {
@@ -75,7 +68,7 @@ export function StatCard({
                 color
               )} group-hover:scale-110 transition-transform duration-200 text-xs sm:text-sm lg:text-base`}
             >
-              {icon}
+              {typeof icon === 'string' ? <span>{icon}</span> : icon}
             </div>
           )}
         </div>
@@ -84,33 +77,7 @@ export function StatCard({
           <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-0.5 sm:mb-1">
             {value}
           </div>
-          {subtitle && (
-            <div className="text-xs sm:text-xs lg:text-sm text-gray-400">
-              {subtitle}
-            </div>
-          )}
         </div>
-
-        {trend && (
-          <div className="flex items-center gap-1 sm:gap-2">
-            <div
-              className={`
-              inline-flex items-center gap-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full text-xs font-medium
-              ${
-                trend.isPositive
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-300 border border-red-500/30'
-              }
-            `}
-            >
-              <span>{trend.isPositive ? '↗' : '↘'}</span>
-              <span>{Math.abs(trend.value)}%</span>
-            </div>
-            <span className="text-xs text-gray-500 hidden lg:inline">
-              vs last period
-            </span>
-          </div>
-        )}
       </div>
     </div>
   );
