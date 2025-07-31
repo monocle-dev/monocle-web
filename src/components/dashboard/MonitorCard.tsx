@@ -1,4 +1,4 @@
-import { StatusBadge } from '../ui/StatusBadge';
+import StatusBadge from '../ui/StatusBadge';
 import {
   formatLastChecked,
   formatResponseTime,
@@ -13,7 +13,7 @@ interface MonitorCardProps {
   onDelete?: (monitorId: number) => void;
 }
 
-export function MonitorCard({ monitor, onEdit, onDelete }: MonitorCardProps) {
+const MonitorCard = ({ monitor, onEdit, onDelete }: MonitorCardProps) => {
   const handleDelete = async () => {
     if (!onDelete) return;
     onDelete(monitor.id);
@@ -145,4 +145,6 @@ export function MonitorCard({ monitor, onEdit, onDelete }: MonitorCardProps) {
       )}
     </div>
   );
-}
+};
+
+export default MonitorCard;

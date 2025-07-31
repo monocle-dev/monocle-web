@@ -3,7 +3,7 @@ import type { Project } from '../../interfaces/Project';
 import { projectsAdapter } from '../../adapters/projects-adapters';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaProjectDiagram, FaTrash } from 'react-icons/fa';
-import { CreateProjectModal } from '../../components/projects/CreateProjectModal';
+import CreateProjectModal from '../../components/projects/CreateProjectModal';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);

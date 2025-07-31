@@ -7,12 +7,7 @@ interface StatCardProps {
   color?: 'green' | 'red' | 'yellow' | 'blue' | 'gray';
 }
 
-export function StatCard({
-  label,
-  value,
-  icon,
-  color = 'gray',
-}: StatCardProps) {
+const StatCard = ({ label, value, icon, color = 'gray' }: StatCardProps) => {
   const getColorClasses = (color: string) => {
     switch (color) {
       case 'green':
@@ -81,4 +76,6 @@ export function StatCard({
       </div>
     </div>
   );
-}
+};
+
+export default StatCard;

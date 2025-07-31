@@ -3,7 +3,7 @@ interface StatusBadgeProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function StatusBadge({ status, size = 'md' }: StatusBadgeProps) {
+const StatusBadge = ({ status, size = 'md' }: StatusBadgeProps) => {
   const getStatusText = (status?: string) => {
     switch (status) {
       case 'success':
@@ -69,4 +69,6 @@ export function StatusBadge({ status, size = 'md' }: StatusBadgeProps) {
       {getStatusText(status)}
     </span>
   );
-}
+};
+
+export default StatusBadge;

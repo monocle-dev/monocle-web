@@ -18,12 +18,12 @@ interface FormData {
   slack_webhook: string;
 }
 
-export function CreateProjectModal({
+const CreateProjectModal = ({
   isOpen,
   onClose,
   onSuccess,
   editingProject,
-}: CreateProjectModalProps) {
+}: CreateProjectModalProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [formData, setFormData] = useState<FormData>({
@@ -222,4 +222,6 @@ export function CreateProjectModal({
       </div>
     </Dialog>
   );
-}
+};
+
+export default CreateProjectModal;

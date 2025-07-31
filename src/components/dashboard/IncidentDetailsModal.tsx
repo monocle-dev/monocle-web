@@ -18,11 +18,11 @@ interface IncidentDetailsModalProps {
   onClose: () => void;
 }
 
-export function IncidentDetailsModal({
+const IncidentDetailsModal = ({
   incident,
   isOpen,
   onClose,
-}: IncidentDetailsModalProps) {
+}: IncidentDetailsModalProps) => {
   if (!incident) return null;
 
   const isOngoing = !incident.resolved_at;
@@ -255,4 +255,6 @@ export function IncidentDetailsModal({
       </div>
     </Dialog>
   );
-}
+};
+
+export default IncidentDetailsModal;

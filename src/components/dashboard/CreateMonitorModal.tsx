@@ -18,13 +18,13 @@ export interface CreateMonitorModalProps {
   editingMonitor?: MonitorSummary | null;
 }
 
-export function CreateMonitorModal({
+const CreateMonitorModal = ({
   projectId,
   isOpen,
   onClose,
   onSuccess,
   editingMonitor,
-}: CreateMonitorModalProps) {
+}: CreateMonitorModalProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -259,4 +259,6 @@ export function CreateMonitorModal({
       </div>
     </Dialog>
   );
-}
+};
+
+export default CreateMonitorModal;

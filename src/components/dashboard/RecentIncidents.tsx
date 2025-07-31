@@ -5,14 +5,14 @@ import {
 import type { IncidentSummary } from '../../interfaces/Monitor';
 import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 import { useState } from 'react';
-import { IncidentDetailsModal } from './IncidentDetailsModal';
+import IncidentDetailsModal from './IncidentDetailsModal';
 
 interface IncidentCardProps {
   incident: IncidentSummary;
   onClick: (incident: IncidentSummary) => void;
 }
 
-function IncidentCard({ incident, onClick }: IncidentCardProps) {
+const IncidentCard = ({ incident, onClick }: IncidentCardProps) => {
   const isOngoing = !incident.resolved_at;
 
   const formatDescription = (description: string) => {
@@ -147,13 +147,13 @@ function IncidentCard({ incident, onClick }: IncidentCardProps) {
       </div>
     </div>
   );
-}
+};
 
 interface RecentIncidentsProps {
   incidents?: IncidentSummary[];
 }
 
-export function RecentIncidents({ incidents = [] }: RecentIncidentsProps) {
+const RecentIncidents = ({ incidents = [] }: RecentIncidentsProps) => {
   const [selectedIncident, setSelectedIncident] =
     useState<IncidentSummary | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -220,4 +220,6 @@ export function RecentIncidents({ incidents = [] }: RecentIncidentsProps) {
       />
     </>
   );
-}
+};
+
+export default RecentIncidents;

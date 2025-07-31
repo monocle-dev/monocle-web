@@ -1,4 +1,4 @@
-import { StatCard } from '../ui/StatCard';
+import StatCard from '../ui/StatCard';
 import type { DashboardResponse } from '../../interfaces/Monitor';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ interface DashboardHeaderProps {
   summary: DashboardResponse['monitors_summary'];
 }
 
-export function DashboardHeader({ project, summary }: DashboardHeaderProps) {
+const DashboardHeader = ({ project, summary }: DashboardHeaderProps) => {
   const navigate = useNavigate();
 
   return (
@@ -55,4 +55,6 @@ export function DashboardHeader({ project, summary }: DashboardHeaderProps) {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardHeader;

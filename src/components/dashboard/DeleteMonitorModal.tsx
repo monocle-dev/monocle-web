@@ -12,13 +12,13 @@ export interface DeleteMonitorModalProps {
   onSuccess: () => void;
 }
 
-export function DeleteMonitorModal({
+const DeleteMonitorModal = ({
   projectId,
   monitor,
   isOpen,
   onClose,
   onSuccess,
-}: DeleteMonitorModalProps) {
+}: DeleteMonitorModalProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -115,4 +115,6 @@ export function DeleteMonitorModal({
       </div>
     </Dialog>
   );
-}
+};
+
+export default DeleteMonitorModal;

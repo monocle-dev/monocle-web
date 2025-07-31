@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import type { DashboardResponse, MonitorCheck } from '../interfaces/Monitor';
 import { monitorsAdapter } from '../adapters/monitors-adapters';
 
-export function useDashboard(projectId: string) {
+export const useDashboard = (projectId: string) => {
   const [data, setData] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,9 +44,9 @@ export function useDashboard(projectId: string) {
   }, [fetchDashboard, projectId]);
 
   return { data, loading, error, refetch: fetchDashboard };
-}
+};
 
-export function useMonitorDetails(projectId: string, monitorId: string) {
+export const useMonitorDetails = (projectId: string, monitorId: string) => {
   const [checks, setChecks] = useState<MonitorCheck[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -77,4 +77,4 @@ export function useMonitorDetails(projectId: string, monitorId: string) {
   }, [fetchChecks]);
 
   return { checks, loading, error, refetch: fetchChecks };
-}
+};

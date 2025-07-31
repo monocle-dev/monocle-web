@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
-import { DashboardHeader } from '../../components/dashboard/DashboardHeader';
-import { MonitorsGrid } from '../../components/dashboard/MonitorsGrid';
-import { RecentIncidents } from '../../components/dashboard/RecentIncidents';
-import { CreateMonitorModal } from '../../components/dashboard/CreateMonitorModal';
-import { DeleteMonitorModal } from '../../components/dashboard/DeleteMonitorModal';
+import DashboardHeader from '../../components/dashboard/DashboardHeader';
+import MonitorsGrid from '../../components/dashboard/MonitorsGrid';
+import RecentIncidents from '../../components/dashboard/RecentIncidents';
+import CreateMonitorModal from '../../components/dashboard/CreateMonitorModal';
+import DeleteMonitorModal from '../../components/dashboard/DeleteMonitorModal';
 import { ErrorState } from '../../components/ui/ErrorState';
-import { RefreshIndicator } from '../../components/ui/RefreshIndicator';
+import RefreshIndicator from '../../components/ui/RefreshIndicator';
 import type { MonitorSummary } from '../../interfaces/Monitor';
 import { FaPlus } from 'react-icons/fa';
 

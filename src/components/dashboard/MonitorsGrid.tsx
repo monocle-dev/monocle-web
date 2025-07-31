@@ -1,4 +1,4 @@
-import { MonitorCard } from './MonitorCard';
+import MonitorCard from './MonitorCard';
 import type { MonitorSummary } from '../../interfaces/Monitor';
 import { FaPlus, FaChartLine } from 'react-icons/fa';
 import type { SetStateAction } from 'react';
@@ -10,12 +10,12 @@ interface MonitorsGridProps {
   setShowCreateModal: React.Dispatch<SetStateAction<boolean>>;
 }
 
-export function MonitorsGrid({
+const MonitorsGrid = ({
   monitors = [],
   onEdit,
   onDelete,
   setShowCreateModal,
-}: MonitorsGridProps) {
+}: MonitorsGridProps) => {
   if (!Array.isArray(monitors) || monitors.length === 0) {
     return (
       <div className="h-full flex items-center justify-center p-4">
@@ -62,4 +62,6 @@ export function MonitorsGrid({
       </div>
     </div>
   );
-}
+};
+
+export default MonitorsGrid;
