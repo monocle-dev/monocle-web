@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
 import { DashboardHeader } from '../../components/dashboard/DashboardHeader';
-import { DashboardSkeleton } from '../../components/dashboard/DashboardSkeleton';
 import { MonitorsGrid } from '../../components/dashboard/MonitorsGrid';
 import { RecentIncidents } from '../../components/dashboard/RecentIncidents';
 import { CreateMonitorModal } from '../../components/dashboard/CreateMonitorModal';
@@ -29,7 +28,7 @@ export const Dashboard = () => {
     return <ErrorState error="Project ID is required" />;
   }
 
-  if (!data && loading) return <DashboardSkeleton />;
+  if (!data && loading) return null;
   if (error) return <ErrorState error={error} onRetry={refetch} />;
   if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
 
@@ -69,8 +68,8 @@ export const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex-1 overflow-hidden">
-        <div className="app-container px-4 sm:px-6 lg:px-8 h-full">
+      <div className="flex-1 overflow-hidden px-4 sm:px-6 lg:px-8 w-full h-full">
+        <div className="app-container w-full h-full">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 h-full py-4 sm:py-6">
             <section className="flex flex-col min-h-0">
               <div className="flex items-center justify-between mb-3 sm:mb-4 flex-shrink-0">

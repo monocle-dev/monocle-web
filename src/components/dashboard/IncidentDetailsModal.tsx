@@ -61,8 +61,8 @@ export function IncidentDetailsModal({
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
 
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-gray-900 border border-gray-700 p-6 text-left align-middle shadow-xl transition-all">
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4 overflow-y-auto">
+        <DialogPanel className="w-full max-w-2xl max-h-[calc(100vh-2rem)] transform overflow-y-auto rounded-2xl bg-gray-900 border border-gray-700 p-6 text-left align-middle shadow-xl transition-all">
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-start gap-4">
               <div
