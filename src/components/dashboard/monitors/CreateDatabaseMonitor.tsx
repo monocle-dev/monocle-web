@@ -49,7 +49,7 @@ const CreateDatabaseMonitor = ({
 
             // Set default SSL mode for postgres, remove for mysql
             if (newType === 'postgres') {
-              onConfigChange('ssl_mode', 'prefer');
+              onConfigChange('ssl_mode', 'require');
             } else {
               // Remove ssl_mode for mysql to keep the config clean
               onConfigChange('ssl_mode', null);
@@ -178,7 +178,7 @@ const CreateDatabaseMonitor = ({
               SSL Mode
             </label>
             <select
-              value={String(config.ssl_mode || 'prefer')}
+              value={String(config.ssl_mode || 'require')}
               onChange={(e) => onConfigChange('ssl_mode', e.target.value)}
               className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >

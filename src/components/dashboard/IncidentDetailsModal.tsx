@@ -25,7 +25,7 @@ export function IncidentDetailsModal({
 }: IncidentDetailsModalProps) {
   if (!incident) return null;
 
-  const isOngoing = !incident.resolved_at;
+  const isOngoing = incident.status === 'ongoing' && !incident.resolved_at;
 
   const formatDescription = (description: string) => {
     const lines = description.split('\n').filter((line) => line.trim());

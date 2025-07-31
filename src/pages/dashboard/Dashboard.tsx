@@ -91,6 +91,7 @@ export const Dashboard = () => {
                     monitors={data.monitors}
                     onEdit={handleEditMonitor}
                     onDelete={handleDeleteMonitor}
+                    setShowCreateModal={setShowCreateModal}
                   />
                 </div>
               </div>

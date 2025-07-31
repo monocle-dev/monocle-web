@@ -1,17 +1,20 @@
 import { MonitorCard } from './MonitorCard';
 import type { MonitorSummary } from '../../interfaces/Monitor';
 import { FaPlus, FaChartLine } from 'react-icons/fa';
+import type { SetStateAction } from 'react';
 
 interface MonitorsGridProps {
   monitors?: MonitorSummary[];
   onEdit?: (monitor: MonitorSummary) => void;
   onDelete?: (monitorId: number) => void;
+  setShowCreateModal: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export function MonitorsGrid({
   monitors = [],
   onEdit,
   onDelete,
+  setShowCreateModal,
 }: MonitorsGridProps) {
   if (!Array.isArray(monitors) || monitors.length === 0) {
     return (
@@ -31,7 +34,10 @@ export function MonitorsGrid({
               Start tracking your services with professional monitoring.
             </p>
 
-            <button className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-3 sm:px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-sm sm:text-base">
+            <button
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-3 sm:px-4 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 text-sm sm:text-base"
+              onClick={() => setShowCreateModal(true)}
+            >
               <FaPlus className="w-3 h-3 sm:w-4 sm:h-4" />
               <span className="hidden sm:inline">Create First Monitor</span>
               <span className="sm:hidden">Add Monitor</span>
