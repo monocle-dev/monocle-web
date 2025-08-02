@@ -10,7 +10,8 @@ const CreateDatabaseMonitor = ({
   formData,
   onConfigChange,
 }: CreateDatabaseMonitorProps) => {
-  const config = formData.config as Record<string, unknown>;
+  const config = formData.config;
+  const defaultSslMode = config.ssl_mode || 'disable';
 
   // Set default values when component mounts or when needed
   useEffect(() => {
@@ -27,9 +28,15 @@ const CreateDatabaseMonitor = ({
 
     // Set default SSL mode for postgres if not set
     if ((config.type || 'postgres') === 'postgres' && !config.ssl_mode) {
-      onConfigChange('ssl_mode', 'prefer');
+      onConfigChange('ssl_mode', defaultSslMode);
     }
-  }, [config.type, config.port, config.ssl_mode, onConfigChange]);
+  }, [
+    config.type,
+    config.port,
+    config.ssl_mode,
+    onConfigChange,
+    defaultSslMode,
+  ]);
 
   return (
     <>
@@ -47,9 +54,8 @@ const CreateDatabaseMonitor = ({
             const defaultPort = newType === 'mysql' ? 3306 : 5432;
             onConfigChange('port', defaultPort);
 
-            // Set default SSL mode for postgres, remove for mysql
             if (newType === 'postgres') {
-              onConfigChange('ssl_mode', 'prefer');
+              onConfigChange('ssl_mode', defaultSslMode);
             } else {
               // Remove ssl_mode for mysql to keep the config clean
               onConfigChange('ssl_mode', null);
@@ -178,7 +184,7 @@ const CreateDatabaseMonitor = ({
               SSL Mode
             </label>
             <select
-              value={String(config.ssl_mode || 'prefer')}
+              value={String(config.ssl_mode || 'require')}
               onChange={(e) => onConfigChange('ssl_mode', e.target.value)}
               className="w-full bg-gray-700 border border-gray-600 rounded px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
@@ -186,8 +192,8 @@ const CreateDatabaseMonitor = ({
               <option value="require">Require</option>
               <option value="verify-ca">Verify CA</option>
               <option value="verify-full">Verify Full</option>
-              <option value="prefer">Prefer</option>
-              <option value="allow">Allow</option>
+              <option value="verify-ca">Verify CA</option>
+              <option value="disable">Disable</option>
             </select>
           </div>
         )}

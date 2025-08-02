@@ -3,7 +3,7 @@ interface ErrorStateProps {
   onRetry?: () => void;
 }
 
-export function ErrorState({ error, onRetry }: ErrorStateProps) {
+export const ErrorState = ({ error, onRetry }: ErrorStateProps) => {
   return (
     <div className="text-center py-12 bg-gray-900 min-h-screen flex items-center justify-center">
       <div>
@@ -23,9 +23,9 @@ export function ErrorState({ error, onRetry }: ErrorStateProps) {
       </div>
     </div>
   );
-}
+};
 
-export function EmptyState() {
+export const EmptyState = () => {
   return (
     <div className="text-center py-12 bg-gray-900 min-h-screen flex items-center justify-center">
       <div>
@@ -39,4 +39,4 @@ export function EmptyState() {
       </div>
     </div>
   );
-}
+};

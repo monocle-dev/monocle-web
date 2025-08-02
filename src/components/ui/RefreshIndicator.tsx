@@ -5,7 +5,7 @@ interface RefreshIndicatorProps {
   onRefresh: () => Promise<void> | void;
 }
 
-export function RefreshIndicator({ onRefresh }: RefreshIndicatorProps) {
+const RefreshIndicator = ({ onRefresh }: RefreshIndicatorProps) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleRefresh = async () => {
@@ -37,4 +37,6 @@ export function RefreshIndicator({ onRefresh }: RefreshIndicatorProps) {
       </button>
     </div>
   );
-}
+};
+
+export default RefreshIndicator;

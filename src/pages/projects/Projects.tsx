@@ -3,17 +3,14 @@ import type { Project } from '../../interfaces/Project';
 import { projectsAdapter } from '../../adapters/projects-adapters';
 import { Link } from 'react-router-dom';
 import { FaEdit, FaProjectDiagram, FaTrash } from 'react-icons/fa';
+import CreateProjectModal from '../../components/projects/CreateProjectModal';
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-  });
 
   useEffect(() => {
     fetchProjects();
@@ -38,38 +35,25 @@ const Projects = () => {
     }
   };
 
-  const handleCreateProject = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await projectsAdapter.createProject(formData);
-      setFormData({ name: '', description: '' });
-      setShowCreateForm(false);
-      fetchProjects();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Failed to create project');
-      }
-    }
+  const handleModalSuccess = () => {
+    setShowCreateModal(false);
+    setEditingProject(null);
+    fetchProjects();
   };
 
-  const handleUpdateProject = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingProject) return;
+  const handleCloseModal = () => {
+    setShowCreateModal(false);
+    setEditingProject(null);
+  };
 
-    try {
-      await projectsAdapter.updateProject(editingProject.id, formData);
-      setFormData({ name: '', description: '' });
-      setEditingProject(null);
-      fetchProjects();
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError('Failed to update project');
-      }
-    }
+  const startCreate = () => {
+    setShowCreateModal(true);
+    setEditingProject(null);
+  };
+
+  const startEdit = (project: Project) => {
+    setEditingProject(project);
+    setShowCreateModal(true);
   };
 
   const handleDeleteProject = async (id: string) => {
@@ -87,31 +71,11 @@ const Projects = () => {
     }
   };
 
-  const startEdit = (project: Project) => {
-    setEditingProject(project);
-    setFormData({
-      name: project.name,
-      description: project.description,
-    });
-    setShowCreateForm(false);
-  };
-
-  const cancelEdit = () => {
-    setEditingProject(null);
-    setFormData({ name: '', description: '' });
-  };
-
-  const startCreate = () => {
-    setShowCreateForm(true);
-    setEditingProject(null);
-    setFormData({ name: '', description: '' });
-  };
-
   if (loading) return null;
 
   return (
     <div className="page-container min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="app-container px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-white mb-2">Projects</h1>
@@ -128,102 +92,6 @@ const Projects = () => {
         {error && (
           <div className="mb-6 p-4 bg-red-900/50 border border-red-500 rounded-lg text-red-200">
             {error}
-          </div>
-        )}
-
-        {(showCreateForm || editingProject) && (
-          <div className="mb-6 bg-gray-900 p-5 rounded-lg border border-gray-700 shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white">
-                {editingProject ? 'Edit Project' : 'Create New Project'}
-              </h2>
-              <button
-                type="button"
-                onClick={
-                  editingProject ? cancelEdit : () => setShowCreateForm(false)
-                }
-                className="text-gray-400 hover:text-gray-300 transition-colors"
-                title="Close form"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <form
-              onSubmit={
-                editingProject ? handleUpdateProject : handleCreateProject
-              }
-              className="space-y-4"
-            >
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
-                    Project Name *
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-sm"
-                    placeholder="Enter project name"
-                    maxLength={100}
-                    required
-                  />
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formData.name.length}/100
-                  </p>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1.5">
-                    Description *
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) =>
-                      setFormData({ ...formData, description: e.target.value })
-                    }
-                    className="w-full bg-gray-700 text-white rounded-md p-2.5 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none text-sm"
-                    placeholder="Brief description..."
-                    rows={3}
-                    maxLength={500}
-                    required
-                  />
-                  <p className="text-xs text-gray-400 mt-1">
-                    {formData.description.length}/500
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-3 pt-3">
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                >
-                  {editingProject ? 'Update' : 'Create'}
-                </button>
-                <button
-                  type="button"
-                  onClick={
-                    editingProject ? cancelEdit : () => setShowCreateForm(false)
-                  }
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-5 py-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 text-sm"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
           </div>
         )}
 
@@ -306,6 +174,13 @@ const Projects = () => {
           </div>
         )}
       </div>
+
+      <CreateProjectModal
+        isOpen={showCreateModal}
+        onClose={handleCloseModal}
+        onSuccess={handleModalSuccess}
+        editingProject={editingProject}
+      />
     </div>
   );
 };
