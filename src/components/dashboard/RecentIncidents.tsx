@@ -1,7 +1,4 @@
-import {
-  formatLastChecked,
-  formatResponseTime,
-} from '../../utils/monitorUtils';
+import { formatLastChecked } from '../../utils/monitorUtils';
 import type { IncidentSummary } from '../../interfaces/Monitor';
 import { FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
 import { useState } from 'react';
@@ -132,9 +129,7 @@ const IncidentCard = ({ incident, onClick }: IncidentCardProps) => {
             <div className="text-right">
               <div className="text-gray-500">Duration</div>
               <div className="text-gray-300">
-                {incident.duration
-                  ? formatResponseTime(incident.duration * 1000)
-                  : 'N/A'}
+                {incident.duration ? incident.duration : 'N/A'}
               </div>
             </div>
           ) : (
