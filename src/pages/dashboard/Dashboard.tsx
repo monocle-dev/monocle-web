@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDashboard } from '../../hooks/useDashboard';
+import { useMonocleWebSocket } from '../../hooks/useWebSocket';
 import DashboardHeader from '../../components/dashboard/DashboardHeader';
 import MonitorsGrid from '../../components/dashboard/MonitorsGrid';
 import RecentIncidents from '../../components/dashboard/RecentIncidents';
 import CreateMonitorModal from '../../components/dashboard/CreateMonitorModal';
 import DeleteMonitorModal from '../../components/dashboard/DeleteMonitorModal';
 import { ErrorState } from '../../components/ui/ErrorState';
-import RefreshIndicator from '../../components/ui/RefreshIndicator';
 import type { MonitorSummary } from '../../interfaces/Monitor';
 import { FaPlus } from 'react-icons/fa';
+import { getConfig } from '../../utils/config';
 
 export const Dashboard = () => {
   const { projectId } = useParams<{ projectId: string }>();
@@ -22,7 +23,24 @@ export const Dashboard = () => {
     null
   );
 
-  const { data, error, refetch, loading } = useDashboard(projectId || '');
+  const { data, error, refetch, loading, refreshFromWebSocket } = useDashboard(
+    projectId || ''
+  );
+
+  // Get WebSocket URL from config
+  const { wsUrl } = getConfig();
+
+  // WebSocket connection
+  const {
+    isConnected: wsConnected,
+    error: wsError,
+    setOnRefreshNeeded,
+  } = useMonocleWebSocket(projectId, wsUrl);
+
+  // Set up WebSocket refresh handler
+  useEffect(() => {
+    setOnRefreshNeeded(refreshFromWebSocket);
+  }, [setOnRefreshNeeded, refreshFromWebSocket]);
 
   if (!projectId) {
     return <ErrorState error="Project ID is required" />;
@@ -48,12 +66,14 @@ export const Dashboard = () => {
   const handleCreateSuccess = () => {
     setShowCreateModal(false);
     setEditingMonitor(null);
+    // Use manual refetch for user-initiated actions
     refetch();
   };
 
   const handleDeleteSuccess = () => {
     setShowDeleteModal(false);
     setDeletingMonitor(null);
+    // Use manual refetch for user-initiated actions
     refetch();
   };
 
@@ -64,6 +84,8 @@ export const Dashboard = () => {
           <DashboardHeader
             project={data.project}
             summary={data.monitors_summary}
+            wsConnected={wsConnected}
+            wsError={wsError}
           />
         </div>
       </div>
@@ -112,8 +134,6 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      <RefreshIndicator onRefresh={refetch} />
 
       <CreateMonitorModal
         projectId={projectId}
