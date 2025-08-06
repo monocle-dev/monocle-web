@@ -8,6 +8,7 @@ import ProtectedRoutes from './components/ProtectedRoutes';
 import Projects from './pages/projects/Projects';
 import Landing from './pages/landing/Landing';
 import { Dashboard } from './pages/dashboard/Dashboard';
+import NotFound from './pages/NotFound';
 
 const App = () => {
   const currentUserContext = useContext(CurrentUserContext);
@@ -55,6 +56,8 @@ const App = () => {
         <Route path="/projects" element={<Projects />} />
         <Route path="/projects/:projectId/dashboard" element={<Dashboard />} />
       </Route>
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
