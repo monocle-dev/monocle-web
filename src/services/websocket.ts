@@ -17,7 +17,7 @@ export class MonocleWebSocket {
   private reconnectAttempts = 0;
   private readonly maxReconnectAttempts = 5;
   private reconnectDelay = 1000; // Start with 1 second
-  private reconnectTimeout: NodeJS.Timeout | null = null;
+  private reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
   private projectId: string;
   private serverUrl: string;
   private handlers: WebSocketEventHandlers;
