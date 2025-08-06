@@ -4,11 +4,13 @@ A modern React-based monitoring dashboard for the Monocle monitoring platform.
 
 ## Features
 
-- **Real-time Dashboard**: Monitor all your services with live status updates
+- **Real-time Dashboard**: Monitor all your services with live status updates via WebSocket connections
 - **Multiple Monitor Types**: Support for HTTP/HTTPS, SSL, DNS, and database monitoring
 - **Incident Tracking**: View recent incidents and their resolution status
 - **Performance Metrics**: Track uptime percentages and response times
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Live Updates**: Automatic dashboard refresh when monitors change (create, update, delete)
+- **Connection Status**: Visual indicators for WebSocket connection status
 
 ## 🏗️ Architecture
 
@@ -20,6 +22,7 @@ A modern React-based monitoring dashboard for the Monocle monitoring platform.
 - **React Router** for navigation
 - **Axios** for API communication
 - **date-fns** for date formatting
+- **WebSocket Integration**: Real-time dashboard updates
 - **Real-time Updates**: Live dashboard with status monitoring
 
 ### Backend
