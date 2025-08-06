@@ -9,6 +9,7 @@ import Projects from './pages/projects/Projects';
 import Landing from './pages/landing/Landing';
 import { Dashboard } from './pages/dashboard/Dashboard';
 import NotFound from './pages/NotFound';
+import axios from 'axios';
 
 const App = () => {
   const currentUserContext = useContext(CurrentUserContext);
@@ -23,17 +24,16 @@ const App = () => {
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const response = await fetch('/api/auth/me');
-        if (response.ok) {
-          const userData = await response.json();
-          setCurrentUser(userData.user);
+        const response = await axios.get('/api/auth/me');
+        if (response.status === 200) {
+          setCurrentUser(response.data.user);
         } else {
           setCurrentUser(null);
         }
       } catch (error) {
+        setCurrentUser(null);
         console.error('Failed to fetch current user:', error);
       }
-
       setLoading(false);
     };
 

@@ -4,6 +4,9 @@ import './index.css';
 import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import CurrentUserContextProvider from './context/CurrentUserContextProvider.tsx';
+import setupAxios from './utils/axios.ts';
+
+setupAxios();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
