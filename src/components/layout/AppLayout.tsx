@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import UserDropdown from '../ui/UserDropdown';
 import CurrentUserContext from '../../context/current-user-context';
+import { authAdapter } from '../../adapters/auth-adapters';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -19,8 +20,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setCurrentUser(updatedUser);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setCurrentUser(null);
+    await authAdapter.logout();
   };
 
   return (

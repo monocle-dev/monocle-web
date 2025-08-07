@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FaCog, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 import type { User as UserType } from '../../interfaces/User';
 import UserManagementModal from './UserManagementModal';
+import { authAdapter } from '../../adapters/auth-adapters';
 
 interface UserDropdownProps {
   currentUser: UserType;
@@ -46,8 +47,13 @@ const UserDropdown: React.FC<UserDropdownProps> = ({
     setIsModalOpen(true);
   };
 
-  const handleQuickLogout = () => {
+  const handleQuickLogout = async () => {
     setIsDropdownOpen(false);
+    try {
+      await authAdapter.logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     onLogout();
   };
 
