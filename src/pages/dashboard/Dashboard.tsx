@@ -74,9 +74,9 @@ export const Dashboard = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden">
+    <div className="h-[calc(100vh-4rem)] flex flex-col overflow-hidden">
       <div className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-4 border-b border-gray-700/50">
-        <div className="app-container">
+        <div className="max-w-7xl mx-auto">
           <DashboardHeader
             project={data.project}
             summary={data.monitors_summary}
@@ -87,7 +87,7 @@ export const Dashboard = () => {
       </div>
 
       <div className="flex-1 overflow-hidden px-4 sm:px-6 lg:px-8 w-full h-full">
-        <div className="app-container w-full h-full">
+        <div className="max-w-7xl mx-auto w-full h-full">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 h-full py-4 sm:py-6">
             <section className="flex flex-col min-h-0">
               <div className="flex items-center justify-between mb-3 sm:mb-4 flex-shrink-0">

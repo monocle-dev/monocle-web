@@ -15,7 +15,6 @@ import monocleScreenshot from '../../assets/monocle-ss.png';
 const Landing = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
-      {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -41,7 +40,6 @@ const Landing = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="mb-8">
@@ -74,7 +72,6 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Hero Image/Dashboard Preview */}
           <div className="mt-16 relative">
             <div className="bg-gray-900 rounded-xl border border-gray-700 p-4 shadow-2xl mx-auto max-w-6xl">
               <img
@@ -88,7 +85,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -103,7 +99,6 @@ const Landing = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* HTTP/HTTPS Monitoring */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-blue-500 transition-colors">
               <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <FaGlobe className="text-white w-6 h-6" />
@@ -131,7 +126,6 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* Database Monitoring */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-purple-500 transition-colors">
               <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <FaDatabase className="text-white w-6 h-6" />
@@ -159,7 +153,6 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* DNS Monitoring */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-green-500 transition-colors">
               <div className="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4">
                 <FaSearch className="text-white w-6 h-6" />
@@ -187,7 +180,6 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* Real-time Analytics */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-yellow-500 transition-colors">
               <div className="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-4">
                 <FaChartLine className="text-white w-6 h-6" />
@@ -215,7 +207,6 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* Instant Alerts */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-red-500 transition-colors">
               <div className="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-4">
                 <FaBell className="text-white w-6 h-6" />
@@ -243,7 +234,6 @@ const Landing = () => {
               </ul>
             </div>
 
-            {/* Easy Setup */}
             <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 hover:border-indigo-500 transition-colors">
               <div className="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-4">
                 <FaRocket className="text-white w-6 h-6" />
@@ -274,12 +264,13 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div>
-              <div className="text-4xl font-bold text-blue-400 mb-2">Open Source</div>
+              <div className="text-4xl font-bold text-blue-400 mb-2">
+                Open Source
+              </div>
               <div className="text-gray-300">Transparent & Free</div>
             </div>
             <div>
@@ -295,14 +286,15 @@ const Landing = () => {
               <div className="text-gray-300">Monitor Options</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-yellow-400 mb-2">Real-time</div>
+              <div className="text-4xl font-bold text-yellow-400 mb-2">
+                Real-time
+              </div>
               <div className="text-gray-300">Status Updates</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -357,7 +349,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12">
@@ -387,7 +378,6 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-700">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center">
