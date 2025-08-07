@@ -4,9 +4,10 @@ import './index.css';
 import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import CurrentUserContextProvider from './context/CurrentUserContextProvider.tsx';
-import setupAxios from './utils/axios.ts';
+import axios from 'axios';
 
-setupAxios();
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
+axios.defaults.withCredentials = true;
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

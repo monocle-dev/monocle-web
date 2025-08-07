@@ -23,7 +23,7 @@ export const Dashboard = () => {
     null
   );
 
-  const { data, error, refetch, loading, refreshFromWebSocket } = useDashboard(
+  const { data, error, loading, refreshFromWebSocket } = useDashboard(
     projectId || ''
   );
 
@@ -47,8 +47,8 @@ export const Dashboard = () => {
   }
 
   if (!data && loading) return null;
-  if (error) return <ErrorState error={error} onRetry={refetch} />;
-  if (!data) return <ErrorState error="No data available" onRetry={refetch} />;
+  if (error) return <ErrorState error={error} />;
+  if (!data) return <ErrorState error="No data available" />;
 
   const handleDeleteMonitor = async (monitorId: number) => {
     const monitor = data?.monitors.find((m) => m.id === monitorId);
@@ -66,15 +66,11 @@ export const Dashboard = () => {
   const handleCreateSuccess = () => {
     setShowCreateModal(false);
     setEditingMonitor(null);
-    // Use manual refetch for user-initiated actions
-    refetch();
   };
 
   const handleDeleteSuccess = () => {
     setShowDeleteModal(false);
     setDeletingMonitor(null);
-    // Use manual refetch for user-initiated actions
-    refetch();
   };
 
   return (
