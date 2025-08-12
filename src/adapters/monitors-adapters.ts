@@ -6,18 +6,12 @@ import type {
   CreateMonitorRequest,
 } from '../interfaces/Monitor';
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
-
 export const monitorsAdapter = {
   async getDashboard(projectId: string): Promise<DashboardResponse> {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/api/projects/${projectId}/dashboard`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`/api/projects/${projectId}/dashboard`, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.error('Failed to fetch dashboard:', error);
@@ -27,12 +21,9 @@ export const monitorsAdapter = {
 
   async getMonitors(projectId: string): Promise<MonitorSummary[]> {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/api/projects/${projectId}/monitors`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`/api/projects/${projectId}/monitors`, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.error('Failed to fetch monitors:', error);
@@ -46,7 +37,7 @@ export const monitorsAdapter = {
   ): Promise<MonitorCheck[]> {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/api/projects/${projectId}/monitors/${monitorId}/checks`,
+        `/api/projects/${projectId}/monitors/${monitorId}/checks`,
         {
           withCredentials: true,
         }
@@ -64,7 +55,7 @@ export const monitorsAdapter = {
   ): Promise<MonitorSummary> {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/api/projects/${projectId}/monitors`,
+        `/api/projects/${projectId}/monitors`,
         monitorData,
         {
           withCredentials: true,
@@ -87,7 +78,7 @@ export const monitorsAdapter = {
   ): Promise<MonitorSummary> {
     try {
       const response = await axios.put(
-        `${API_BASE_URL}/api/projects/${projectId}/monitors/${monitorId}`,
+        `/api/projects/${projectId}/monitors/${monitorId}`,
         monitorData,
         {
           withCredentials: true,
@@ -105,12 +96,9 @@ export const monitorsAdapter = {
 
   async deleteMonitor(projectId: string, monitorId: string): Promise<void> {
     try {
-      await axios.delete(
-        `${API_BASE_URL}/api/projects/${projectId}/monitors/${monitorId}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`/api/projects/${projectId}/monitors/${monitorId}`, {
+        withCredentials: true,
+      });
     } catch (error) {
       console.error('Failed to delete monitor:', error);
       throw new Error('Failed to delete monitor');
