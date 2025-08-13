@@ -2,6 +2,10 @@
 
 A modern React-based monitoring dashboard for the Monocle monitoring platform.
 
+<!-- image path -->
+
+![Monocle Dashboard](./src/assets/monocle.png)
+
 ## Features
 
 - **Real-time Dashboard**: Monitor all your services with live status updates via WebSocket connections
