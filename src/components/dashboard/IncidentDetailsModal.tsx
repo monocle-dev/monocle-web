@@ -7,10 +7,7 @@ import {
   FaServer,
 } from 'react-icons/fa';
 import type { IncidentSummary } from '../../interfaces/Monitor';
-import {
-  formatLastChecked,
-  formatResponseTime,
-} from '../../utils/monitorUtils';
+import { formatLastChecked } from '../../utils/monitorUtils';
 
 interface IncidentDetailsModalProps {
   incident: IncidentSummary | null;
@@ -159,7 +156,7 @@ const IncidentDetailsModal = ({
                     incident.duration > 300 ? 'text-red-400' : 'text-yellow-400'
                   }`}
                 >
-                  {formatResponseTime(incident.duration * 1000)}
+                  {incident.duration}
                 </div>
               </div>
             )}
