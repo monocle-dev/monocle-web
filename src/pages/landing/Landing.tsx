@@ -14,7 +14,7 @@ import monocleScreenshot from '../../assets/monocle-ss.png';
 
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900">
+    <div className="min-h-screen bg-gray-900">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/90 border-b border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -46,7 +46,7 @@ const Landing = () => {
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
               Monitor Everything.
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">
+              <span className="text-blue-400">
                 Miss Nothing.
               </span>
             </h1>
@@ -80,7 +80,6 @@ const Landing = () => {
                 className="w-full h-auto rounded-lg"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent pointer-events-none rounded-xl"></div>
           </div>
         </div>
       </section>
@@ -351,7 +350,7 @@ const Landing = () => {
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-12">
+          <div className="bg-blue-600 rounded-2xl p-12">
             <h2 className="text-4xl font-bold text-white mb-6">
               Ready to Start Monitoring?
             </h2>
